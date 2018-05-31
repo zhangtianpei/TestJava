@@ -1,21 +1,14 @@
-addLoadEvent(prepareShow);
+// addLoadEvent(prepareShow);
 // window.onload = prepareShow;
 
 function showPic(whichpic){
-	if(!document.getElementById("example01")) return false;
 	var source = whichpic.getAttribute("href");
 	var example_p = document.getElementById("example01");
-	if(example_p.nodeName != "IMG") return false;
 	example_p.setAttribute("src",source);
-	if(document.getElementById("des")){
-		var dessource = whichpic.getAttribute("title") ? whichpic.getAttribute("title") : "";
-		var example_d = document.getElementById("des");
-		if(example_d.firstChild.nodeType == 3){
-			example_d.firstChild.nodeValue = dessource;	
-		}
-		
-	}
-	return true;
+
+	var dessource = whichpic.getAttribute("title");
+	var example_d = document.getElementById("des");
+	example_d.firstChild.nodeValue = dessource;
 }
 
 function prepareShow(){
@@ -27,10 +20,9 @@ function prepareShow(){
 
 	for(var i=0;i<links.length;i++){
 		links[i].onclick = function(){
-			return showPic(this) ? false : true;
-			// return false;
+			showPic(this);
+			return false;
 		}
-		// links[i].onkeypress = links[i].onclick;
 	}
 }
 
@@ -44,4 +36,18 @@ function addLoadEvent(fn){
                     fn();
                 }
             }
+}
+
+window.onload = function(){
+	var imgpara = document.createElement("img");
+	imgpara.setAttribute("id","example01");
+	imgpara.setAttribute("src","images/example.jpg");
+	imgpara.setAttribute("alt","Example Image");
+	var despara = document.createElement("p");
+	despara.setAttribute("id","des");
+	var text01 = document.createTextNode("chose a picture!!!");
+	despara.appendChild(text01);
+	document.getElementsByTagName("body")[0].appendChild("imgpara");
+	document.getElementsByTagName("body")[0].appendChild("despara");
+
 }
